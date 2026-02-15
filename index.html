@@ -185,10 +185,10 @@
 
 .signature-container {
     margin-top: 20px;
-    margin-bottom: 30px; /* Espacio extra para que no choque con el reproductor */
+    /* Este margen es la clave: evita que el reproductor tape la firma al final */
+    margin-bottom: 60px; 
     text-align: center;
     padding: 10px;
-    animation: fadeInSignature 2s ease-in;
 }
 
 .signature-text {
@@ -205,11 +205,6 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     opacity: 0.8;
-}
-
-@keyframes fadeInSignature {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
     </style>
 </head>
@@ -339,7 +334,7 @@
         <div class="signature-container">
                 <span class="signature-text">Con amor, Tu Cerezito 🍒</span>
                 <span class="signature-subtext">Always & Forever</span>
-            </div>
+        </div>
 
         <div class="fixed-player">
             <div class="time-box">
