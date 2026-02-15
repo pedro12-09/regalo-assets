@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Cerezita</title>
+    <title>Para Mi Cerezita <3</title>
     <style>
         :root {
             --bg-gradient: radial-gradient(circle, #fff0f6 0%, #ffdee9 100%);
@@ -25,18 +25,17 @@
             --box-bg: #252545;
         }
 
-        /* AJUSTE PARA MÓVILES: Eliminado height: 100vh y overflow: hidden */
         body {
             margin: 0;
             padding: 0;
             background: var(--bg-gradient);
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: background 0.5s ease;
-            overflow-x: hidden;
         }
 
         /* DISEÑO PREMIUM DEL BOTÓN DE VIDEO */
@@ -77,6 +76,7 @@
             margin-bottom: 20px;
         }
 
+        /* --- RESTO DE TUS ESTILOS ORIGINALES --- */
         .particle { position: fixed; pointer-events: none; z-index: 9999; font-size: 15px; animation: particleFade 1s forwards; }
         @keyframes particleFade { to { transform: translateY(-50px) scale(0); opacity: 0; } }
         
@@ -88,42 +88,13 @@
         .bl { bottom: -20px; left: -20px; transform: rotate(-10deg) scaleY(-1); }
         .br { bottom: -20px; right: -20px; transform: rotate(10deg) scale(-1); }
 
-        /* AJUSTE CARD: min-height y margin para asegurar visibilidad en móvil */
-        .card { 
-            background: var(--card-bg); 
-            border-radius: 30px; 
-            text-align: center; 
-            position: relative; 
-            z-index: 10; 
-            width: 90%; 
-            max-width: 450px; 
-            height: 85vh; /* Mantiene proporción */
-            margin: 20px 0;
-            border: 8px double var(--border-color); 
-            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.4); 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden; 
-        }
-        
+        .card { background: var(--card-bg); border-radius: 30px; text-align: center; position: relative; z-index: 10; width: 90%; max-width: 450px; max-height: 85vh; border: 8px double var(--border-color); box-shadow: 0 20px 50px rgba(255, 105, 180, 0.4); display: flex; flex-direction: column; overflow: hidden; }
         .scrollable-content { padding: 30px 30px 10px 30px; overflow-y: auto; flex: 1; }
         .scrollable-content::-webkit-scrollbar { width: 8px; }
         .scrollable-content::-webkit-scrollbar-track { background: var(--box-bg); border-radius: 10px; }
         .scrollable-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
 
-        /* AJUSTE PLAYER: z-index para estar siempre encima */
-        .fixed-player { 
-            padding: 10px 15px; 
-            background: var(--card-bg); 
-            border-top: 2px solid var(--box-bg); 
-            border-radius: 0 0 25px 25px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            gap: 10px;
-            z-index: 20; 
-        }
-
+        .fixed-player { padding: 10px 15px; background: var(--card-bg); border-top: 2px solid var(--box-bg); border-radius: 0 0 25px 25px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         h1 { color: var(--text-main); margin: 0; font-size: 1.8em; }
         .frase-hogar { color: var(--accent); font-style: italic; font-size: 1.3em; margin: 10px 0; font-weight: bold; }
         p { color: var(--text-p); font-size: 1.05em; line-height: 1.5; font-weight: 500; }
@@ -177,11 +148,6 @@
         .falling-element { position: fixed; top: -10vh; z-index: 5; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         .burst-particle { position: fixed; pointer-events: none; z-index: 20; transition: transform 0.8s, opacity 0.8s; }
-        .signature-container {
-    margin: 20px 0 10px 0;
-    text-align: right; /* La alinea a la derecha para que parezca una carta real */
-    padding-right: 10px;
-}
     </style>
 </head>
 <body>
@@ -227,6 +193,7 @@
 
             <button class="play-btn" style="background:#ff85a1" onclick="alert('Tu cerezito: Te amo infinitamente 🩷')">🐽Click🐽</button>
 
+            
             <div class="letter-card" onclick="this.classList.toggle('open')">
                 <div class="letter-header">
                     <strong style="color:var(--accent)">Un pensamiento:</strong>
@@ -236,39 +203,64 @@
                     Sabías que san Valentín no es el único día para celebrar nuestro amor? Para mí, todos los días contigo son especiales, eres mi inspiración en prácticamente todo. Al escuchar la música clásica y de piano, tus canciones favoritas, las flores, los animalitos, los videojuegos favoritos, lugares por visitar, mis sueños por cumplir volvieron a revivir. Todo fruto de tu amor, mi gran sueño es ser el mejor hombre para ti, ser el mejor novio/esposo, y el mejor padre de tus hijos. Por ti aprendería a hacer muchas cosas. ❤️ 
                 </div>
             </div>
+<div class="letter-card">
+    <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
+        <strong style="color:var(--accent)">De mi para ti:</strong>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="letter-content" style="padding: 0 15px 15px 15px;">
+        <textarea 
+            id="cartaDeMi"
+            style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
+            placeholder="Escribe algo lindo antes de enviárselo..."
+            onclick="event.stopPropagation()"
+            oninput="saveLetter('cartaDeMi', this.value)"></textarea>
+    </div>
+</div>
 
-            <div class="letter-card">
-                <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
-                    <strong style="color:var(--accent)">De mi para ti:</strong>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="letter-content" style="padding: 0 15px 15px 15px;">
-                    <textarea 
-                        id="cartaDeMi"
-                        style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
-                        placeholder="Escribe algo lindo antes de enviárselo..."
-                        onclick="event.stopPropagation()"
-                        oninput="saveLetter('cartaDeMi', this.value)"></textarea>
-                </div>
-            </div>
+<div class="letter-card">
+    <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
+        <strong style="color:var(--accent)">De ti para mí:</strong>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="letter-content" style="padding: 0 15px 15px 15px;">
+        <p style="font-size: 0.8em; margin-bottom: 5px; color: var(--accent); font-style: italic;">
+            Escribe aquí lo que quieras, amor... (se guarda solo)
+        </p>
+        <textarea 
+            id="cartaDeTi"
+            style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
+            placeholder="Tus pensamientos aquí..."
+            onclick="event.stopPropagation()"
+            oninput="saveLetter('cartaDeTi', this.value)"></textarea>
+    </div>
+</div>
 
-            <div class="letter-card">
-                <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
-                    <strong style="color:var(--accent)">De ti para mí:</strong>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="letter-content" style="padding: 0 15px 15px 15px;">
-                    <p style="font-size: 0.8em; margin-bottom: 5px; color: var(--accent); font-style: italic;">
-                        Escribe aquí lo que quieras, amor... (se guarda solo)
-                    </p>
-                    <textarea 
-                        id="cartaDeTi"
-                        style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
-                        placeholder="Tus pensamientos aquí..."
-                        onclick="event.stopPropagation()"
-                        oninput="saveLetter('cartaDeTi', this.value)"></textarea>
-                </div>
-            </div>
+<script>
+    // Función de guardado mejorada para manejar múltiples cartas
+    function saveLetter(id, text) {
+        localStorage.setItem(id, text);
+    }
+
+    // Nueva lógica de carga para las dos cartas
+    function loadSavedLetters() {
+        const ids = ['cartaDeMi', 'cartaDeTi'];
+        ids.forEach(id => {
+            const savedText = localStorage.getItem(id);
+            const element = document.getElementById(id);
+            if (savedText && element) {
+                element.value = savedText;
+            }
+        });
+    }
+
+    // Asegúrate de llamar a loadSavedLetters() dentro de tu window.onload
+    // Ejemplo de cómo debería verse tu window.onload al final del archivo:
+    window.addEventListener('load', () => {
+        loadSavedLetters();
+        updateTimer(); // Si ya tenías el timer
+    });
+</script>
 
             <div style="color:var(--text-main); font-weight:bold; font-size:0.9em; margin-top:20px;">NUESTROS MOMENTOS ✨</div>
             <div class="collage-container">
@@ -302,14 +294,10 @@
             </div>
             <div class="footer-info">Status: Noviazgo | Version: 12.09.25 | Love: Infinito</div>
             <button class="download-btn" onclick="window.open('https://github.com/pedro12-09/regalo-assets/tree/main', '_blank')">
-                📂 Ver Repositorio
-            </button>
+    📂 Ver Repositorio
+</button>
             <div style="font-size:25px; margin-top:10px;">🌷 🌷 🌷</div>
         </div>
-        
-        <div class="signature-container">
-                <span class="signature-text">Con amor, Tu Cerezito 🍒</span>
-            </div>
 
         <div class="fixed-player">
             <div class="time-box">
@@ -349,7 +337,7 @@
             { title: "Love is forever - Muse", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/Neutron%20Star%20Collision%20%28Love%20Is%20Forever%29%20-%20Soundtrack%20Version_spotdown.org.mp3" },
             { title: "Die with a Smile - Bruno mars", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Die%20With%20A%20Smile_spotdown.org.mp3" },
             { title: "Ordinary - Alex Warren", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/Ordinary_spotdown.org.mp3" },
-            { title: "Starlight - Starset", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Starlight_spotdown.org.mp3" },
+            { title: "Starlight - Starset", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/Starlight_spotdown.org.mp3" },
             { title: "Yellow - Coldplay", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Yellow_spotdown.org.mp3" },
             { title: "Keep Holding On - Avril Lavigne", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Keep%20Holding%20On_spotdown.org.mp3" },
             { title: "Amo - Axel", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Amo_spotdown.org.mp3" },
@@ -362,26 +350,6 @@
         const audio = document.getElementById('loveSong');
         const songTitle = document.getElementById('songTitle');
         let isPlaying = false;
-
-        function saveLetter(id, text) {
-            localStorage.setItem(id, text);
-        }
-
-        function loadSavedLetters() {
-            const ids = ['cartaDeMi', 'cartaDeTi'];
-            ids.forEach(id => {
-                const savedText = localStorage.getItem(id);
-                const element = document.getElementById(id);
-                if (savedText && element) {
-                    element.value = savedText;
-                }
-            });
-        }
-
-        window.addEventListener('load', () => {
-            loadSavedLetters();
-            updateTimer();
-        });
 
         function toggleVideo() {
             const wrapper = document.getElementById('videoWrapper');
