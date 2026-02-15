@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Desarrolladora Favorita</title>
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle, #fff0f6 0%, #ffdee9 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #d63384;
+            --text-p: #444;
+            --border-color: #ff85a1;
+            --accent: #ff4d6d;
+            --box-bg: #fff0f6;
+        }
+
+        .dark-mode {
+            --bg-gradient: radial-gradient(circle, #1a1a2e 0%, #0f0f1b 100%);
+            --card-bg: rgba(20, 20, 35, 0.95);
+            --text-main: #ff75a0;
+            --text-p: #e0e0e0;
+            --border-color: #ff2d6d;
+            --accent: #ff4d6d;
+            --box-bg: #252545;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-gradient);
+            height: 100vh;
+            overflow: hidden; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s ease;
+        }
+
+        /* DISEÑO PREMIUM DEL BOTÓN DE VIDEO */
+        .video-trigger {
+            background: linear-gradient(45deg, var(--accent), var(--text-main));
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            width: fit-content;
+        }
+
+        .video-trigger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
+        }
+
+        .video-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .video-container.show {
+            max-height: 400px;
+            margin-bottom: 20px;
+        }
+
+        /* --- RESTO DE TUS ESTILOS ORIGINALES --- */
+        .particle { position: fixed; pointer-events: none; z-index: 9999; font-size: 15px; animation: particleFade 1s forwards; }
+        @keyframes particleFade { to { transform: translateY(-50px) scale(0); opacity: 0; } }
+        
+        .theme-toggle { background: var(--box-bg); border: 2px solid var(--border-color); padding: 8px; border-radius: 50%; cursor: pointer; font-size: 18px; transition: transform 0.2s; }
+
+        .corner-branch { position: fixed; font-size: 120px; z-index: 2; pointer-events: none; filter: drop-shadow(0 5px 15px rgba(255, 182, 193, 0.6)); user-select: none; }
+        .tl { top: -20px; left: -20px; transform: rotate(10deg); }
+        .tr { top: -20px; right: -20px; transform: rotate(-10deg) scaleX(-1); }
+        .bl { bottom: -20px; left: -20px; transform: rotate(-10deg) scaleY(-1); }
+        .br { bottom: -20px; right: -20px; transform: rotate(10deg) scale(-1); }
+
+        .card { background: var(--card-bg); border-radius: 30px; text-align: center; position: relative; z-index: 10; width: 90%; max-width: 450px; max-height: 85vh; border: 8px double var(--border-color); box-shadow: 0 20px 50px rgba(255, 105, 180, 0.4); display: flex; flex-direction: column; overflow: hidden; }
+        .scrollable-content { padding: 30px 30px 10px 30px; overflow-y: auto; flex: 1; }
+        .scrollable-content::-webkit-scrollbar { width: 8px; }
+        .scrollable-content::-webkit-scrollbar-track { background: var(--box-bg); border-radius: 10px; }
+        .scrollable-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        .fixed-player { padding: 10px 15px; background: var(--card-bg); border-top: 2px solid var(--box-bg); border-radius: 0 0 25px 25px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        h1 { color: var(--text-main); margin: 0; font-size: 1.8em; }
+        .frase-hogar { color: var(--accent); font-style: italic; font-size: 1.3em; margin: 10px 0; font-weight: bold; }
+        p { color: var(--text-p); font-size: 1.05em; line-height: 1.5; font-weight: 500; }
+
+        .love-meter-area { margin: 15px 0; padding: 10px; background: var(--box-bg); border-radius: 15px; }
+        .love-meter-fill { width: 10%; height: 100%; background: var(--accent); transition: width 0.3s ease; }
+        .love-meter-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+
+        .reveal-container { display: flex; flex-direction: column; gap: 8px; margin: 15px 0; }
+        .reveal-box { background: var(--box-bg); border: 1px dashed var(--border-color); padding: 12px; border-radius: 12px; cursor: pointer; position: relative; overflow: hidden; }
+        .reveal-box span { filter: blur(8px); opacity: 0; transition: all 0.6s ease; display: block; color: var(--text-p); }
+        .reveal-box span a { color: var(--accent); text-decoration: underline; }
+        .reveal-box.unlocked { background: var(--card-bg); border: 1px solid var(--accent); }
+        .reveal-box.unlocked span { filter: blur(0); opacity: 1; }
+        .reveal-box::before { content: '🔍 Toca para revelar'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.8em; color: var(--border-color); }
+        .reveal-box.unlocked::before { display: none; }
+
+        .letter-card { background: var(--box-bg); margin: 15px 0; border-radius: 15px; text-align: left; border-left: 4px solid var(--accent); font-family: 'Georgia', serif; color: var(--text-p); overflow: hidden; }
+        .letter-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .letter-content { max-height: 0; padding: 0 15px; opacity: 0; transition: all 0.5s ease; }
+        .letter-card.open .letter-content { max-height: 500px; padding: 0 15px 15px 15px; opacity: 1; }
+        .toggle-icon { font-size: 0.8em; transition: transform 0.3s; color: var(--accent); }
+        .letter-card.open .toggle-icon { transform: rotate(180deg); }
+
+        .collage-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
+        .photo-item { background: white; padding: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transform: rotate(var(--rot)); }
+        .photo-item img { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; }
+
+        .music-controls { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .player-buttons { display: flex; align-items: center; gap: 10px; }
+        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 15px; }
+        .bar { width: 3px; background: var(--accent); height: 5px; transition: height 0.2s; }
+
+        .play-btn, .download-btn { background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        .download-btn { background: var(--text-main); font-size: 0.75em; opacity: 0.9; margin-top: 10px; }
+        .nav-btn { background: var(--border-color); color: white; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; }
+        .song-title { font-size: 0.55em; color: var(--text-main); font-weight: bold; text-align: center; }
+
+        .main-heart { font-size: 65px; animation: beat 1.2s infinite; filter: drop-shadow(0 0 10px var(--accent)); cursor: pointer; display: inline-block; }
+        .time-box { background: var(--box-bg); border: 2px solid var(--border-color); padding: 8px; border-radius: 12px; min-width: 80px; text-align: center; }
+        .counter { font-size: 0.65em; color: var(--accent); font-family: monospace; font-weight: bold; line-height: 1.2; }
+
+        .progress-container { width: 80%; background: #eee; border-radius: 10px; margin: 10px auto; height: 8px; }
+        .progress-bar { width: 0%; height: 100%; background: var(--accent); animation: load 3.5s forwards; }
+        .deploy-text { font-size: 0.6em; color: var(--border-color); font-weight: bold; letter-spacing: 1px; margin-top: 5px; }
+        .geo-info { font-size: 0.7em; color: var(--text-p); margin: 10px 0; opacity: 0.7; }
+        .footer-info { margin-top: 15px; font-size: 0.6em; color: #bbb; text-transform: uppercase; }
+
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes load { to { width: 100%; } }
+        .falling-element { position: fixed; top: -10vh; z-index: 5; pointer-events: none; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        .burst-particle { position: fixed; pointer-events: none; z-index: 20; transition: transform 0.8s, opacity 0.8s; }
+    </style>
+</head>
+<body>
+
+    <div class="corner-branch tl">🌸</div>
+    <div class="corner-branch tr">🌸</div>
+    <div class="corner-branch bl">🌸</div>
+    <div class="corner-branch br">🌸</div>
+
+    <div class="card">
+        <div class="scrollable-content">
+            <div style="font-size:25px;">🍒 🍒 🍒</div>
+            <h1>Feliz día Amorcito🩷</h1>
+            
+            <div class="main-heart" id="heartTrigger" onclick="boostLove()">❤️</div>
+
+            <div class="love-meter-area">
+                <div style="font-size: 0.7em; color: var(--accent); font-weight: bold;">🩷🩷LOVE🩷🩷</div>
+                <div class="love-meter-bar"><div class="love-meter-fill" id="loveFill"></div></div>
+                <div style="font-size: 0.6em; color: var(--text-p);">Toca el corazón</div>
+            </div>
+
+            <div class="frase-hogar">"Nuestro 14 de febrero"</div>
+            
+            <p>Eres mi canción favorita, la melodía que quiero escuchar por siempre, y la dueña de mi corazón.</p>
+
+            <div class="reveal-container">
+                <div class="reveal-box" onclick="this.classList.add('unlocked')">
+                    <span>Eres mi lugar <a href="https://www.google.com/maps/@52.2700545,4.5369527,3a,75y,284.14h,87.09t/data=!3m6!1e1!3m4!1s-u_Mue7pCHHq_A-rLqC3-Q!2e0!7i13312!8i6656" target="_blank">favorito</a></span>
+                </div>
+                <div class="reveal-box" onclick="this.classList.add('unlocked')">
+                    <span>Nuestro <a href="https://maps.app.goo.gl/upu8cKPkgFTNgof38?g_st=ac" target="_blank">lugar para la gran cita</a> 🩷</span>
+                </div>
+            </div>
+
+            <div class="progress-container"><div class="progress-bar"></div></div>
+            <div class="deploy-text">DEPLOYING INFINITE LOVE...</div>
+
+            <div class="geo-info">
+                📍 COORDINATES: 12.1534° N, 86.2737° W <br>
+                (3749km de amor y más alla)
+            </div>
+
+            <button class="play-btn" style="background:#ff85a1" onclick="alert('Tu cerezito: Te amo infinitamente 🩷')">🐽Click🐽</button>
+
+            
+            <div class="letter-card" onclick="this.classList.toggle('open')">
+                <div class="letter-header">
+                    <strong style="color:var(--accent)">Un pensamiento:</strong>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="letter-content">
+                    Sabías que san Valentín no es el único día para celebrar nuestro amor? Para mí, todos los días contigo son especiales, eres mi inspiración en prácticamente todo. Al escuchar la música clásica y de piano, tus canciones favoritas, las flores, los animalitos, los videojuegos favoritos, lugares por visitar, mis sueños por cumplir volvieron a revivir. Todo fruto de tu amor, mi gran sueño es ser el mejor hombre para ti, ser el mejor novio/esposo, y el mejor padre de tus hijos. Por ti aprendería a hacer muchas cosas. ❤️ 
+                </div>
+            </div>
+<div class="letter-card">
+    <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
+        <strong style="color:var(--accent)">De mi para ti:</strong>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="letter-content" style="padding: 0 15px 15px 15px;">
+        <textarea 
+            id="cartaDeMi"
+            style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
+            placeholder="Escribe algo lindo antes de enviárselo..."
+            onclick="event.stopPropagation()"
+            oninput="saveLetter('cartaDeMi', this.value)"></textarea>
+    </div>
+</div>
+
+<div class="letter-card">
+    <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
+        <strong style="color:var(--accent)">De ti para mí:</strong>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="letter-content" style="padding: 0 15px 15px 15px;">
+        <p style="font-size: 0.8em; margin-bottom: 5px; color: var(--accent); font-style: italic;">
+            Escribe aquí lo que quieras, amor... (se guarda solo)
+        </p>
+        <textarea 
+            id="cartaDeTi"
+            style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
+            placeholder="Tus pensamientos aquí..."
+            onclick="event.stopPropagation()"
+            oninput="saveLetter('cartaDeTi', this.value)"></textarea>
+    </div>
+</div>
+
+<script>
+    // Función de guardado mejorada para manejar múltiples cartas
+    function saveLetter(id, text) {
+        localStorage.setItem(id, text);
+    }
+
+    // Nueva lógica de carga para las dos cartas
+    function loadSavedLetters() {
+        const ids = ['cartaDeMi', 'cartaDeTi'];
+        ids.forEach(id => {
+            const savedText = localStorage.getItem(id);
+            const element = document.getElementById(id);
+            if (savedText && element) {
+                element.value = savedText;
+            }
+        });
+    }
+
+    // Asegúrate de llamar a loadSavedLetters() dentro de tu window.onload
+    // Ejemplo de cómo debería verse tu window.onload al final del archivo:
+    window.addEventListener('load', () => {
+        loadSavedLetters();
+        updateTimer(); // Si ya tenías el timer
+    });
+</script>
+
+            <div style="color:var(--text-main); font-weight:bold; font-size:0.9em; margin-top:20px;">NUESTROS MOMENTOS ✨</div>
+            <div class="collage-container">
+                <div class="photo-item" style="--rot: -3deg"><img src="https://raw.githubusercontent.com/pedro12-09/regalo-assets/refs/heads/main/IMG-20250726-WA0005%7E3.jpg" alt="1"></div>
+                <div class="photo-item" style="--rot: 2deg"><img src="https://raw.githubusercontent.com/pedro12-09/regalo-assets/refs/heads/main/IMG-20250726-WA0005%7E2.jpg" alt="2"></div>
+                <div class="photo-item" style="--rot: -1deg"><img src="https://raw.githubusercontent.com/pedro12-09/regalo-assets/refs/heads/main/IMG_20260214_182438.jpg" alt="3"></div>
+                <div class="photo-item" style="--rot: 4deg"><img src="https://raw.githubusercontent.com/pedro12-09/regalo-assets/refs/heads/main/IMG_20260214_182511.jpg" alt="4"></div>
+            </div>
+
+            <button class="video-trigger" onclick="toggleVideo()">
+                <span>🎬 Ver nuestra película</span>
+                <small id="videoIcon">▼</small>
+            </button>
+
+            <div id="videoWrapper" class="video-container">
+                <div style="border: 4px solid var(--border-color); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);">
+                    <iframe 
+                        id="ytPlayer"
+                        width="100%" 
+                        height="250" 
+                        src="" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p style="font-size: 0.7em; margin-top: 8px; font-style: italic; color: var(--accent);">
+                    🔊 No olvides activar el sonido en el video
+                </p>
+            </div>
+            <div class="footer-info">Status: Noviazgo | Version: 12.09.25 | Love: Infinito</div>
+            <button class="download-btn" onclick="window.open('https://github.com/pedro12-09/regalo-assets/tree/main', '_blank')">
+    📂 Ver Repositorio
+</button>
+            <div style="font-size:25px; margin-top:10px;">🌷 🌷 🌷</div>
+        </div>
+
+        <div class="fixed-player">
+            <div class="time-box">
+                <div class="counter" id="timer">00d 00h 00m 00s<br>JUNTOS</div>
+            </div>
+
+            <div class="music-controls">
+                <div class="song-title" id="songTitle">Experience - Ludovico</div>
+                <div class="player-buttons">
+                    <button class="nav-btn" onclick="prevSong()">«</button>
+                    <button class="play-btn" id="playBtn" onclick="toggleMusic()">PLAY ♫</button>
+                    <button class="nav-btn" onclick="nextSong()">»</button>
+                </div>
+                <div class="visualizer" id="eq">
+                    <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                </div>
+            </div>
+
+            <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+        </div>
+    </div>
+
+    <audio id="loveSong" loop="" src="https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Experience_spotdown.org.mp3"></audio>
+
+    <script>
+        const playlist = [
+            { title: "Experience - Ludovico", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Experience_spotdown.org.mp3" },
+            { title: "A thousand years - The piano guys", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/A%20Thousand%20Years_spotdown.org.mp3" },
+            { title: "New West - Those eyes", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Those%20Eyes_spotdown.org.mp3" },
+            { title: "Young and Beautiful - Lana del rey", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Young%20And%20Beautiful_spotdown.org.mp3" },
+            { title: "Luna - Zoe", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Luna%20-%20En%20Vivo_spotdown.org.mp3" },
+            { title: "No matter what - Papa roach", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/No%20Matter%20What_spotdown.org.mp3" },
+            { title: "Give me Love - Ed Sheeran", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Give%20Me%20Love_spotdown.org.mp3" },
+            { title: "You & I - One direction", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/You%20%26%20I%20-%20Piano%20Version_spotdown.org.mp3" },
+            { title: "End of Beginning - Joe Keery", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/End%20of%20Beginning_spotdown.org.mp3" },
+            { title: "Somewhere only we know - Keane", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Somewhere%20Only%20We%20Know_spotdown.org.mp3" },
+            { title: "Love is forever - Muse", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/Neutron%20Star%20Collision%20%28Love%20Is%20Forever%29%20-%20Soundtrack%20Version_spotdown.org.mp3" },
+            { title: "Die with a Smile - Bruno mars", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Die%20With%20A%20Smile_spotdown.org.mp3" },
+            { title: "Ordinary - Alex Warren", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/Ordinary_spotdown.org.mp3" },
+            { title: "Starlight - Starset", url: "https://ia903101.us.archive.org/31/items/20-romantic-songs.org/Starlight_spotdown.org.mp3" },
+            { title: "Yellow - Coldplay", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Yellow_spotdown.org.mp3" },
+            { title: "Keep Holding On - Avril Lavigne", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Keep%20Holding%20On_spotdown.org.mp3" },
+            { title: "Amo - Axel", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Amo_spotdown.org.mp3" },
+            { title: "I wanna be yours - Dramatic violin", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/I%20Wanna%20Be%20Yours%20%28Violin%29_spotdown.org.mp3" },
+            { title: "One day - Hans Zimmer", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/One%20Day%20-%20From%20_Pirates%20of%20the%20Caribbean_%20At%20World%27s%20End__Score_spotdown.org.mp3" },
+            { title: "Mutation - C418", url: "https://ia803101.us.archive.org/31/items/20-romantic-songs.org/Mutation_spotdown.org.mp3" }
+        ];
+
+        let currentSongIndex = 0;
+        const audio = document.getElementById('loveSong');
+        const songTitle = document.getElementById('songTitle');
+        let isPlaying = false;
+
+        function toggleVideo() {
+            const wrapper = document.getElementById('videoWrapper');
+            const player = document.getElementById('ytPlayer');
+            const icon = document.getElementById('videoIcon');
+            const videoId = "X2MyEKZ1EKo";
+
+            if (!wrapper.classList.contains('show')) {
+                player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&rel=0`;
+                wrapper.classList.add('show');
+                icon.style.transform = "rotate(180deg)";
+            } else {
+                player.src = "";
+                wrapper.classList.remove('show');
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function loadSong(index) {
+            if(!playlist[index].url) return;
+            audio.src = playlist[index].url;
+            songTitle.innerText = playlist[index].title;
+            if (isPlaying) audio.play();
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(currentSongIndex);
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(currentSongIndex);
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.querySelector('.theme-toggle');
+            btn.innerHTML = document.body.classList.contains('dark-mode') ? '🌙' : '☀️';
+        }
+
+        function downloadPage() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'Para_Mi_Desarrolladora_Favorita.html';
+            a.click();
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.8) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = ['✨', '💖', '🌸', '🌷'][Math.floor(Math.random()*4)];
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1000);
+            }
+        });
+
+        let loveLevel = 10;
+        function boostLove() {
+            loveLevel = Math.min(loveLevel + 5, 100);
+            document.getElementById('loveFill').style.width = loveLevel + '%';
+            triggerBurst();
+        }
+
+        function toggleMusic() {
+            if (!isPlaying) {
+                audio.play();
+                document.getElementById('playBtn').innerHTML = "PAUSE";
+                startEQ();
+            } else {
+                audio.pause();
+                document.getElementById('playBtn').innerHTML = "PLAY ♫";
+                stopEQ();
+            }
+            isPlaying = !isPlaying;
+        }
+
+        let eqInterval;
+        function startEQ() {
+            eqInterval = setInterval(() => {
+                document.querySelectorAll('.bar').forEach(b => {
+                    b.style.height = Math.random() * 10 + 5 + 'px';
+                });
+            }, 150);
+        }
+        function stopEQ() {
+            clearInterval(eqInterval);
+            document.querySelectorAll('.bar').forEach(b => b.style.height = '5px');
+        }
+
+        const startDate = new Date(2025, 8, 12);
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff / 3600000) % 24);
+            const m = Math.floor((diff / 60000) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s<br>JUNTOS`;
+        }
+        setInterval(updateTimer, 1000);
+
+        setInterval(() => {
+            const e = document.createElement('div');
+            e.className = 'falling-element';
+            e.innerHTML = ['❤️', '🌷', '🌸', '🍒', '🐽'][Math.floor(Math.random()*5)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.fontSize = Math.random() * 20 + 15 + 'px';
+            e.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 7000);
+        }, 400);
+
+        function triggerBurst() {
+            const heart = document.getElementById('heartTrigger');
+            const rect = heart.getBoundingClientRect();
+            for (let i = 0; i < 10; i++) {
+                const p = document.createElement('div');
+                p.className = 'burst-particle';
+                p.innerHTML = '💖';
+                p.style.left = (rect.left + rect.width/2) + 'px';
+                p.style.top = (rect.top + rect.height/2) + 'px';
+                document.body.appendChild(p);
+                const a = Math.random() * Math.PI * 2;
+                const d = Math.random() * 100 + 50;
+                setTimeout(() => {
+                    p.style.transform = `translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px)`;
+                    p.style.opacity = '0';
+                }, 10);
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
