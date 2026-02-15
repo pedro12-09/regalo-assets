@@ -177,6 +177,27 @@
         .falling-element { position: fixed; top: -10vh; z-index: 5; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         .burst-particle { position: fixed; pointer-events: none; z-index: 20; transition: transform 0.8s, opacity 0.8s; }
+        .signature-container {
+    margin: 20px 0 10px 0;
+    text-align: right; /* La alinea a la derecha para que parezca una carta real */
+    padding-right: 10px;
+}
+
+.signature-text {
+    font-family: 'Cursive', 'Georgia', serif; /* Intenta usar una fuente cursiva */
+    font-size: 1.2em;
+    color: var(--text-main);
+    font-style: italic;
+    opacity: 0.9;
+    display: block;
+}
+
+.signature-subtext {
+    font-size: 0.7em;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
     </style>
 </head>
 <body>
@@ -299,6 +320,10 @@
             <button class="download-btn" onclick="window.open('https://github.com/pedro12-09/regalo-assets/tree/main', '_blank')">
                 📂 Ver Repositorio
             </button>
+            <div class="signature-container">
+    <span class="signature-text">Con amor, Tu Cerezito 🍒</span>
+    <span class="signature-subtext">Always & Forever</span>
+            </div>
             <div style="font-size:25px; margin-top:10px;">🌷 🌷 🌷</div>
         </div>
 
