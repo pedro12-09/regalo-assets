@@ -183,20 +183,33 @@
     padding-right: 10px;
 }
 
+.signature-container {
+    margin-top: 20px;
+    margin-bottom: 30px; /* Espacio extra para que no choque con el reproductor */
+    text-align: center;
+    padding: 10px;
+    animation: fadeInSignature 2s ease-in;
+}
+
 .signature-text {
-    font-family: 'Cursive', 'Georgia', serif; /* Intenta usar una fuente cursiva */
-    font-size: 1.2em;
+    font-family: 'Apple Chancery', 'Cursive', 'Georgia', serif;
+    font-size: 1.4em;
     color: var(--text-main);
     font-style: italic;
-    opacity: 0.9;
     display: block;
 }
 
 .signature-subtext {
-    font-size: 0.7em;
+    font-size: 0.65em;
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+@keyframes fadeInSignature {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
     </style>
 </head>
@@ -324,9 +337,9 @@
         </div>
         
         <div class="signature-container">
-    <span class="signature-text">Con amor, Tu Cerezito 🍒</span>
-    <span class="signature-subtext">Always & Forever</span>
-        </div>
+                <span class="signature-text">Con amor, Tu Cerezito 🍒</span>
+                <span class="signature-subtext">Always & Forever</span>
+            </div>
 
         <div class="fixed-player">
             <div class="time-box">
