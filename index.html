@@ -180,6 +180,39 @@
         .falling-element { position: fixed; top: -10vh; z-index: 5; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         .burst-particle { position: fixed; pointer-events: none; z-index: 20; transition: transform 0.8s, opacity 0.8s; }
+        /* Contenedor relativo para posicionar el botón */
+.letter-content {
+    position: relative;
+}
+
+.download-txt-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background 0.2s;
+    z-index: 5;
+}
+
+.download-txt-btn:hover {
+    transform: scale(1.1);
+    background: var(--text-main);
+}
+
+.download-txt-btn:active {
+    transform: scale(0.9);
+}
     </style>
 </head>
 <body>
@@ -247,6 +280,8 @@
                         placeholder="Escribe algo lindo antes de enviárselo..."
                         onclick="event.stopPropagation()"
                         oninput="saveLetter('cartaDeMi', this.value)"></textarea>
+                    <button class="download-txt-btn" title="Descargar como Documento" 
+        onclick="downloadAsDoc('cartaDeMi', 'Para_Mi_Cerezita.doc'); event.stopPropagation();">📥</button>
                 </div>
             </div>
 
@@ -265,6 +300,8 @@
                         placeholder="Tus pensamientos aquí..."
                         onclick="event.stopPropagation()"
                         oninput="saveLetter('cartaDeTi', this.value)"></textarea>
+                    <button class="download-txt-btn" title="Descargar como Documento" 
+        onclick="downloadAsDoc('cartaDeTi', 'Para_Mi_Cerezito.doc'); event.stopPropagation();">📥</button>
                 </div>
             </div>
 
@@ -513,6 +550,25 @@
                 }, 10);
                 setTimeout(() => p.remove(), 1000);
             }
+        }
+        function downloadAsDoc(textareaId, fileName) {
+    const text = document.getElementById(textareaId).value;
+    if (!text.trim()) {
+        alert("¡Escribe algo primero para poder descargarlo! ✍️");
+        return;
+    }
+    
+    // Cambiamos el tipo de 'text/plain' a 'application/msword'
+    const blob = new Blob([text], { type: 'application/msword' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    
+    a.href = url;
+    // Aseguramos que la extensión del archivo sea .doc
+    a.download = fileName.replace('.txt', '.doc'); 
+    a.click();
+    
+    window.URL.revokeObjectURL(url);
         }
     </script>
 </body>
