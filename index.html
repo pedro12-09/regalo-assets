@@ -221,6 +221,10 @@
     opacity: 1;
     pointer-events: auto;
 }
+        textarea[readonly] {
+    cursor: default;
+    user-select: none; /* Evita que se seleccione el texto por error */
+        }
     </style>
 </head>
 <body>
@@ -277,41 +281,45 @@
             </div>
 
             <div class="letter-card">
-                <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
-                    <strong style="color:var(--accent)">De mi para ti:</strong>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="letter-content" style="padding: 0 15px 15px 15px;">
-                    <textarea 
-                        id="cartaDeMi"
-                        style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
-                        placeholder="Escribe algo lindo antes de enviárselo..."
-                        onclick="event.stopPropagation()"
-                        oninput="saveLetter('cartaDeMi', this.value)"></textarea>
-                    <button class="download-txt-btn" title="Descargar como Documento" 
-        onclick="downloadAsDoc('cartaDeMi', 'Para_Mi_Cerezita.doc'); event.stopPropagation();">📥</button>
-                </div>
-            </div>
+    <div class="letter-header" onclick="manejarCarta(this.parentElement, 'cartaDeMi')">
+        <strong style="color:var(--accent)">De mi para ti:</strong>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="letter-content" style="padding: 0 15px 15px 15px;">
+        <textarea 
+            id="cartaDeMi"
+            readonly
+            style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
+            placeholder="Escribe algo lindo antes de enviárselo..."
+            onclick="event.stopPropagation()"
+            oninput="saveLetter('cartaDeMi', this.value)"></textarea>
+            
+        <button class="download-txt-btn" title="Descargar como Documento" 
+            onclick="downloadAsDoc('cartaDeMi', 'Para_Mi_Cerezita.doc'); event.stopPropagation();">📥</button>
+    </div>
+</div>
 
             <div class="letter-card">
-                <div class="letter-header" onclick="this.parentElement.classList.toggle('open')">
-                    <strong style="color:var(--accent)">De ti para mí:</strong>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="letter-content" style="padding: 0 15px 15px 15px;">
-                    <p style="font-size: 0.8em; margin-bottom: 5px; color: var(--accent); font-style: italic;">
-                        Escribe aquí lo que quieras, amor... (se guarda solo)
-                    </p>
-                    <textarea 
-                        id="cartaDeTi"
-                        style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
-                        placeholder="Tus pensamientos aquí..."
-                        onclick="event.stopPropagation()"
-                        oninput="saveLetter('cartaDeTi', this.value)"></textarea>
-                    <button class="download-txt-btn" title="Descargar como Documento" 
-        onclick="downloadAsDoc('cartaDeTi', 'Para_Mi_Cerezito.doc'); event.stopPropagation();">📥</button>
-                </div>
-            </div>
+    <div class="letter-header" onclick="manejarCarta(this.parentElement, 'cartaDeTi')">
+        <strong style="color:var(--accent)">De ti para mí:</strong>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="letter-content" style="padding: 0 15px 15px 15px;">
+        <p style="font-size: 0.8em; margin-bottom: 5px; color: var(--accent); font-style: italic;">
+            Escribe aquí lo que quieras, amor... (se guarda solo)
+        </p>
+        <textarea 
+            id="cartaDeTi"
+            readonly
+            style="width: 100%; height: 150px; background: rgba(255,255,255,0.7); border: 2px dashed var(--border-color); border-radius: 15px; padding: 12px; font-family: 'Georgia', serif; color: var(--text-p); outline: none; resize: none; box-sizing: border-box; display: block;" 
+            placeholder="Tus pensamientos aquí..."
+            onclick="event.stopPropagation()"
+            oninput="saveLetter('cartaDeTi', this.value)"></textarea>
+
+        <button class="download-txt-btn" title="Descargar como Documento" 
+            onclick="downloadAsDoc('cartaDeTi', 'Para_Mi_Cerezito.doc'); event.stopPropagation();">📥</button>
+    </div>
+</div>
 
             <div style="color:var(--text-main); font-weight:bold; font-size:0.9em; margin-top:20px;">NUESTROS MOMENTOS ✨</div>
             <div class="collage-container">
@@ -577,6 +585,23 @@
     a.click();
     
     window.URL.revokeObjectURL(url);
+        }
+        function manejarCarta(cartaElemento, textareaId) {
+    // 1. Abrir o cerrar la carta
+    cartaElemento.classList.toggle('open');
+    
+    const textarea = document.getElementById(textareaId);
+    
+    // 2. Controlar el teclado
+    if (cartaElemento.classList.contains('open')) {
+        // Si se abre: quitamos bloqueo y damos foco
+        textarea.removeAttribute('readonly');
+        textarea.focus(); 
+    } else {
+        // Si se cierra: ponemos bloqueo y quitamos foco (cierra teclado)
+        textarea.setAttribute('readonly', true);
+        textarea.blur(); 
+    }
         }
     </script>
 </body>
